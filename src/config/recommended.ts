@@ -1,7 +1,7 @@
 export default {
-  plugins: ['typescript-sort-keys'],
+  plugins: ['typescript-custom-sort-keys'],
   rules: {
-    'typescript-sort-keys/interface': 'error',
-    'typescript-sort-keys/string-enum': 'error',
+    'typescript-custom-sort-keys/interface': 'error',
+    'typescript-custom-sort-keys/string-enum': 'error',
   },
 }

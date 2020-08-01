@@ -23,13 +23,23 @@ interface RequiredFirstSortingOption {
   readonly requiredFirst: boolean
 }
 
+interface DisplayFirstOption {
+  readonly displayFirst: Array<string>
+}
+
+interface ShowFunctionsAtEndOption {
+  readonly showFunctionsAtEnd: boolean
+}
+
 export interface SortingParamsOptions {
   readonly caseSensitive: CaseSensitiveSortingOption
   readonly natural: NaturalSortingOption
   readonly requiredFirst: RequiredFirstSortingOption
+  readonly displayFirst: DisplayFirstOption
+  readonly showFunctionsAtEnd: ShowFunctionsAtEndOption
 }
 
 export enum ErrorMessage {
-  InterfaceInvalidOrder = `Expected interface keys to be in {{ requiredFirst }}{{ natural }}{{ insensitive }}{{ order }}ending order. '{{ thisName }}' should be before '{{ prevName }}'.`,
-  StringEnumInvalidOrder = `Expected string enum members to be in {{ natural }}{{ insensitive }}{{ order }}ending order. '{{ thisName }}' should be before '{{ prevName }}'.`,
+  InterfaceInvalidOrder = 'Please fix the order by running eslint --fix',
+  StringEnumInvalidOrder = 'Please fix the order by running eslint --fix'
 }

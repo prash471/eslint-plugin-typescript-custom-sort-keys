@@ -18,7 +18,9 @@ export const name = 'interface' as const
 
 type SortingParams = SortingParamsOptions['caseSensitive'] &
   SortingParamsOptions['natural'] &
-  SortingParamsOptions['requiredFirst']
+  SortingParamsOptions['requiredFirst'] & 
+  SortingParamsOptions['displayFirst'] &
+  SortingParamsOptions['showFunctionsAtEnd']
 
 /**
  * The options this rule can take.
@@ -57,7 +59,7 @@ const schema: JSONSchema4 = [sortingOrderOptionSchema, sortingParamsOptionSchema
  */
 const defaultOptions: Options = [
   SortingOrder.Ascending,
-  { caseSensitive: true, natural: false, requiredFirst: false },
+  { caseSensitive: true, natural: false, requiredFirst: false, displayFirst:[], showFunctionsAtEnd: false },
 ]
 
 /**

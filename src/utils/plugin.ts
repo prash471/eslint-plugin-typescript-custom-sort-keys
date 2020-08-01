@@ -10,7 +10,7 @@ import assert from 'assert'
 import { SortingOrder } from 'common/options'
 import { Options as InterfaceRuleOptions } from 'rules/interface'
 import { Options as StringEnumRuleOptions } from 'rules/string-enum'
-import { getPropertyName, getPropertyIsOptional } from './ast'
+import { getPropertyName } from './ast'
 import { compareFn } from './compare'
 
 type RuleOptions = InterfaceRuleOptions & StringEnumRuleOptions
@@ -137,7 +137,7 @@ function createNodeSwapper(context: UtilRuleContext<string, RuleOptions>) {
     }, [])
 }
 
-function isDisplayFirst(node:TSType, displayFirst: Array<string>) {
+function isDisplayFirst(node:any, displayFirst?: Array<string>): boolean {
   const name = node.key && node.key.name;
   if (name && displayFirst) {
     if (displayFirst.some((i) => name.startsWith(i))) {
@@ -147,7 +147,7 @@ function isDisplayFirst(node:TSType, displayFirst: Array<string>) {
   return false;
 }
 
-function isDisplayLast(node:TSType, showFunctionsAtEnd: boolean) {
+function isDisplayLast(node:any, showFunctionsAtEnd?: boolean): boolean {
   if (showFunctionsAtEnd) {
     const typeAnnotation =
       node.typeAnnotation && node.typeAnnotation.typeAnnotation;
@@ -170,12 +170,13 @@ export function createReporter<MessageIds extends string>(
   const isAscending = order === SortingOrder.Ascending
   const isInsensitive = (options && options.caseSensitive) === false
   const isNatural = Boolean(options && options.natural)
-  const isRequiredFirst = (options && options.requiredFirst) === true
+  const isRequiredFirst = true
   const displayFirst = options && options.displayFirst;
   const showFunctionsAtEnd = options && options.showFunctionsAtEnd;
 
   const compare = compareFn(isAscending, isInsensitive, isNatural)
   const swapNodes = createNodeSwapper(context)
+  console.log('sssss');
 
   return (body: TSType[]) => {
     const bodyA = body
@@ -204,22 +205,11 @@ export function createReporter<MessageIds extends string>(
     )
 
     for (let i = 1; i < body.length; i += 1) {
-      const prevNode = body[i - 1]
       const currentNode = body[i]
-      const prevNodeName = getPropertyName(prevNode)
-      const currentNodeName = getPropertyName(currentNode)
+      const targetPosition = sortedBody.indexOf(currentNode)
+      const replaceNode = body[targetPosition]
 
-      if (
-        (!isRequiredFirst && compare(prevNodeName, currentNodeName) > 0) ||
-        (isRequiredFirst &&
-          getPropertyIsOptional(prevNode) === getPropertyIsOptional(currentNode) &&
-          compare(prevNodeName, currentNodeName) > 0) ||
-        (isRequiredFirst &&
-          getPropertyIsOptional(prevNode) !== getPropertyIsOptional(currentNode) &&
-          getPropertyIsOptional(prevNode))
-      ) {
-        const targetPosition = sortedBody.indexOf(currentNode)
-        const replaceNode = body[targetPosition]
+      if (currentNode !== replaceNode) {
         const { loc, messageId } = createReportObject(currentNode)
 
         // Sanity check
@@ -233,15 +223,6 @@ export function createReporter<MessageIds extends string>(
           loc,
           messageId,
           node: currentNode,
-          data: {
-            thisName: currentNodeName,
-            prevName: prevNodeName,
-            order,
-            insensitive: isInsensitive ? 'insensitive ' : '',
-            natural: isNatural ? 'natural ' : '',
-            requiredFirst: isRequiredFirst ? 'required first ' : '',
-          },
-
           fix: fixer => {
             if (currentNode !== replaceNode) {
               return swapNodes(fixer, nodePositions, currentNode, replaceNode)
