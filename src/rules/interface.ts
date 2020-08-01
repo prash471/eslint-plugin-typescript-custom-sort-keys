@@ -37,6 +37,12 @@ const sortingParamsOptionSchema: JSONSchema4 = {
     requiredFirst: {
       type: 'boolean',
     },
+    displayFirst: {
+      type: 'array',
+    },
+    showFunctionsAtEnd: {
+      type: 'boolean',
+    },
   },
   additionalProperties: false,
 }

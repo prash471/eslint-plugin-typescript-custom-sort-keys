@@ -137,6 +137,27 @@ function createNodeSwapper(context: UtilRuleContext<string, RuleOptions>) {
     }, [])
 }
 
+function isDisplayFirst(node:TSType, displayFirst: Array<string>) {
+  const name = node.key && node.key.name;
+  if (name && displayFirst) {
+    if (displayFirst.some((i) => name.startsWith(i))) {
+      return true;
+    }
+  }
+  return false;
+}
+
+function isDisplayLast(node:TSType, showFunctionsAtEnd: boolean) {
+  if (showFunctionsAtEnd) {
+    const typeAnnotation =
+      node.typeAnnotation && node.typeAnnotation.typeAnnotation;
+    if (typeAnnotation && typeAnnotation.type === 'TSFunctionType') {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function createReporter<MessageIds extends string>(
   context: UtilRuleContext<MessageIds, RuleOptions>,
   createReportObject: (
@@ -150,22 +171,32 @@ export function createReporter<MessageIds extends string>(
   const isInsensitive = (options && options.caseSensitive) === false
   const isNatural = Boolean(options && options.natural)
   const isRequiredFirst = (options && options.requiredFirst) === true
+  const displayFirst = options && options.displayFirst;
+  const showFunctionsAtEnd = options && options.showFunctionsAtEnd;
 
   const compare = compareFn(isAscending, isInsensitive, isNatural)
   const swapNodes = createNodeSwapper(context)
 
   return (body: TSType[]) => {
+    const bodyA = body
+      .slice(0)
+      .filter((node) => isDisplayFirst(node, displayFirst))
+      .sort((a, b) => compare(getPropertyName(a), getPropertyName(b)));
+    const bodyB = body
+      .slice(0)
+      .filter(
+        (node) =>
+          !isDisplayLast(node, showFunctionsAtEnd) &&
+          !isDisplayFirst(node, displayFirst)
+      )
+      .sort((a, b) => compare(getPropertyName(a), getPropertyName(b)));
+    const bodyC = body
+      .slice(0)
+      .filter((node) => isDisplayLast(node, showFunctionsAtEnd))
+      .sort((a, b) => compare(getPropertyName(a), getPropertyName(b)));
+
     const sortedBody = isRequiredFirst
-      ? [
-          ...body
-            .slice(0)
-            .filter(node => !getPropertyIsOptional(node))
-            .sort((a, b) => compare(getPropertyName(a), getPropertyName(b))),
-          ...body
-            .slice(0)
-            .filter(node => getPropertyIsOptional(node))
-            .sort((a, b) => compare(getPropertyName(a), getPropertyName(b))),
-        ]
+      ? [...bodyA, ...bodyB, ...bodyC]
       : body.slice(0).sort((a, b) => compare(getPropertyName(a), getPropertyName(b)))
 
     const nodePositions = new Map(
