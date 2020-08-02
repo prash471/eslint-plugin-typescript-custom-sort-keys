@@ -46,4 +46,4 @@ Then configure the rules you want to use under the rules section.
 
 |Before| After |
 |--|--|
-| <img src='https://lh5.googleusercontent.com/y_tpGeh9g0g0gKPIccaxEK0vMx462vg45ezfo55q9UBnBUWs8SUXhjyGDrfSy34s2Bv9uSAdqLdPuHUF138h=w2080-h1878-rw'> | <img src='https://lh4.googleusercontent.com/t4SLRbnbzkBglwlggayNiYKSKFYY2emCrmaa0oLZxj8UHeN_zzp9cRnteKD4MjUrzr93MQT-f-FrjtZt6LAX=w2080-h1878-rw'> |
+| <img src='https://lh4.googleusercontent.com/OAAOAb78qpOzRxJNLF487kI_uyf-NG2UUQbXgQp4vu8Zaa1U_y-xCN2E4cPQbUQ6MeZLDKhHjbSNaA=w3360-h1878-rw'> | <img src='https://lh4.googleusercontent.com/mshgPT4QByaAhf9ZNxqOsj4Z5RaQA_kXv3eECebtICrJ-1Q66GUSC1s1Mf9WL7tMCnxypXGq8jIYug=w3360-h1878-rw'> |
