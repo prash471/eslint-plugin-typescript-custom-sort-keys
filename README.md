@@ -3,6 +3,7 @@
 
 This plugin sorts your typescript and interfaces in a custom defined order.
 
+References:
 
 - [eslint/sort-keys](https://github.com/eslint/eslint/blob/master/docs/rules/sort-keys.md)
 - [eslint/eslint-plugin-typescript-sort-keys](https://github.com/infctr/eslint-plugin-typescript-sort-keys)

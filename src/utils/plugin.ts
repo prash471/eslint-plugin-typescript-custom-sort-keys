@@ -176,7 +176,6 @@ export function createReporter<MessageIds extends string>(
 
   const compare = compareFn(isAscending, isInsensitive, isNatural)
   const swapNodes = createNodeSwapper(context)
-  console.log('sssss');
 
   return (body: TSType[]) => {
     const bodyA = body
