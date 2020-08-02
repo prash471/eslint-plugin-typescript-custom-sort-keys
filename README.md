@@ -46,4 +46,4 @@ Then configure the rules you want to use under the rules section.
 
 |Before| After |
 |--|--|
-| <img src='https://lh4.googleusercontent.com/OAAOAb78qpOzRxJNLF487kI_uyf-NG2UUQbXgQp4vu8Zaa1U_y-xCN2E4cPQbUQ6MeZLDKhHjbSNaA=w3360-h1878-rw'> | <img src='https://lh4.googleusercontent.com/mshgPT4QByaAhf9ZNxqOsj4Z5RaQA_kXv3eECebtICrJ-1Q66GUSC1s1Mf9WL7tMCnxypXGq8jIYug=w3360-h1878-rw'> |
+| <img src="https://i.ibb.co/6w15TZs/Snipaste-2020-08-02-01-27-13.jpg" alt="Snipaste-2020-08-02-01-27-13" border="0" /></a> | <img src="https://i.ibb.co/bmTmZ1p/Snipaste-2020-08-02-01-16-25.jpg" alt="Snipaste-2020-08-02-01-16-25" border="0" /> |
